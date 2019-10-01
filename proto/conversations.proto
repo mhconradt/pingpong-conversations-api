@@ -1,0 +1,137 @@
+syntax = "proto3";
+package conversations;
+import "google/protobuf/field_mask.proto";
+import "github.com/infobloxopen/protoc-gen-gorm/options/gorm.proto";
+import "github.com/mhconradt/proto/status/status.proto";
+import  "github.com/mhconradt/proto/user/user.proto";
+import "github.com/mhconradt/proto/conversation/conversation.proto";
+import "github.com/mhconradt/proto/message/message.proto";
+
+service Conversations {
+    // Creates a new conversation with the creator in it
+    rpc CreateConversation (CreateConversationRequest) returns (CreateConversationResponse);
+    // Updates the fields within a conversation specified in the request
+    rpc UpdateConversation (UpdateConversationRequest) returns (UpdateConversationResponse);
+    // Subscribes the user to a stream of their conversations.
+    // Notifications of new and deleted conversations will arrive via this stream.
+    rpc ListConversations (ListConversationsRequest) returns (stream ListConversationsResponse);
+    // Deletes the conversation.
+    rpc DeleteConversation (DeleteConversationRequest) returns (DeleteConversationResponse);
+    // Sends a message
+    rpc SendMessage (SendMessageRequest) returns (SendMessageResponse);
+    // Subscribes the user to a stream of the conversation's messages
+    // Lists any messages after start_message_id at the beginning of sessions
+    // Pushes any new messages throughout the session
+    rpc ListMessages (ListMessagesRequest) returns (stream ListMessagesResponse);
+    // Adds a user to the conversation
+    rpc AddMember(AddMemberRequest) returns (AddMemberResponse);
+    // Subscribes the user to a stream of the conversation's users
+    // Lists existing users at the beginning of the session
+    // Notifies the user of any new or removed users throughout the session
+    rpc ListMembers(ListMembersRequest) returns (stream ListMembersResponse);
+    // Removes a user from the conversation
+    rpc RemoveMember(RemoveMemberRequest) returns (RemoveMemberResponse);
+}
+
+enum Action {
+    LIST = 0;
+    REMOVE = 1;
+    NEW = 2;
+}
+
+message CreateConversationRequest {
+    pingpong.conversation.Conversation conversation = 1;
+}
+
+message CreateConversationResponse {
+    pingpong.conversation.Conversation conversation = 1;
+    pingpong.status.Status status = 2;
+}
+
+message UpdateConversationRequest {
+    pingpong.conversation.Conversation conversation = 1;
+    google.protobuf.FieldMask update_mask = 2;
+}
+
+message UpdateConversationResponse {
+    pingpong.conversation.Conversation conversation = 1;
+    pingpong.status.Status status = 2;
+}
+
+message ListConversationsRequest {
+    int32 subscriber_id = 1;
+    google.protobuf.FieldMask list_mask = 2;
+}
+
+message ListConversationsResponse {
+    pingpong.conversation.Conversation conversation = 1;
+    Action action = 2;
+    pingpong.status.Status status = 3;
+}
+
+message DeleteConversationRequest {
+    pingpong.conversation.Conversation conversation = 1;
+}
+
+message DeleteConversationResponse {
+    pingpong.status.Status status = 1;
+}
+
+message SendMessageRequest {
+    pingpong.message.Message message = 1;
+}
+
+message SendMessageResponse {
+    // We send back an id so the user can remove the message from the pending queue once they receive it
+    pingpong.message.Message message = 1;
+    pingpong.status.Status status = 2;
+}
+
+message ListMessagesRequest {
+    // the id of the conversation for which to listen for messages
+    int32 conversation_id = 1;
+    // The subscriber's ID
+    int32 subscriber_id = 2;
+    // The last message the user received.
+    // Interestingly enough this could be used in tandem with the pub-sub. (start message id, etc.)
+    int32 start_message_id = 3;
+}
+
+message ListMessagesResponse {
+    pingpong.message.Message message = 1;
+    // Questionable
+    Action action = 2;
+    pingpong.status.Status status = 3;
+}
+
+message AddMemberRequest {
+    int32 conversation_id = 1;
+    int32 user_id = 2;
+}
+
+message AddMemberResponse {
+    pingpong.status.Status status = 1;
+}
+
+message ListMembersRequest {
+    // The conversation for which to list users
+    int32 conversation_id = 1;
+    int32 subscriber_id = 2;
+}
+
+message ListMembersResponse {
+    pingpong.user.User user = 1;
+    // The type of action involved. Is this a new user, are we just listing the user, did they get removed, what happened here?
+    Action action = 2;
+    // Deeply questionable
+    pingpong.status.Status status = 3;
+}
+
+message RemoveMemberRequest {
+    int32 conversation_id = 1;
+    int32 user_id = 2;
+}
+
+message RemoveMemberResponse {
+    pingpong.status.Status status = 1;
+}
