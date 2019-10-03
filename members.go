@@ -40,13 +40,15 @@ func (c *Conversations) AddMember(ctx context.Context, req *proto2.AddMemberRequ
 	if err := saveUserStatus(ctx, req.UserId, req.ConversationId, 1); err != nil {
 		res.Status = status.InternalServerError("failed to add member to conversation")
 	}
-	if err := notifyUser(ctx, req.UserId, req.ConversationId, proto2.Action_LIST); err != nil {
+	nuErr := notifyUser(ctx, req.UserId, req.ConversationId, proto2.Action_LIST)
+	ngErr := notifyGroup(ctx, req.UserId, req.ConversationId, proto2.Action_LIST)
+	if nuErr != nil {
 		res.Status = status.InternalServerError("failed to invite new member")
-		return err
+		return nuErr
 	}
-	if err := notifyGroup(ctx, req.UserId, req.ConversationId, proto2.Action_LIST); err != nil {
+	if ngErr != nil {
 		res.Status = status.InternalServerError("failed to notify group")
-		return err
+		return ngErr
 	}
 	res.Status = status.SuccessValue
 	return nil
@@ -78,7 +80,7 @@ func notifyUser(ctx context.Context, userId, conversationId int32, action proto2
 		return err
 	}
 	topic := fmt.Sprintf("users_%v_conversations", userId)
-	return pubsub.SendOnce(topic, msg)
+	return pubsub.Publish(topic,  msg)
 }
 
 func notifyGroup(ctx context.Context, userId, conversationId int32, action proto2.Action) error {
@@ -97,7 +99,7 @@ func notifyGroup(ctx context.Context, userId, conversationId int32, action proto
 	if err != nil {
 		return err
 	}
-	return pubsub.SendOnce(topic, msg)
+	return pubsub.Publish(topic, msg)
 }
 
 func (c *Conversations) ListMembers(ctx context.Context, req *proto2.ListMembersRequest, s proto2.Conversations_ListMembersStream) error {
@@ -115,13 +117,7 @@ func (c *Conversations) ListMembers(ctx context.Context, req *proto2.ListMembers
 		return s.Send(res)
 	}
 	topic := fmt.Sprintf("conversations_%v_members", req.ConversationId)
-	sub, err := pubsub.NewSubscriber(topic, fmt.Sprintf("%v", req.SubscriberId))
-	if err != nil {
-		res := &proto2.ListMembersResponse{
-			Status: status.InternalServerError("failed to subscribe to new members"),
-		}
-		return s.Send(res)
-	}
+	sub := pubsub.NewSubscriber(topic)
 	defer sub.Close()
 	for msg := range sub.Messages {
 		// send the list member response
@@ -183,13 +179,15 @@ func (c *Conversations) RemoveMember(ctx context.Context, req *proto2.RemoveMemb
 	}
 	// Notifying the user is an independent process
 	// Save the status, then both notify the user and the group regardless of each other's success
-	if err := notifyUser(ctx, req.UserId, req.ConversationId, proto2.Action_REMOVE); err != nil {
+	nuErr := notifyUser(ctx, req.UserId, req.ConversationId, proto2.Action_REMOVE)
+	ngErr := notifyGroup(ctx, req.UserId, req.ConversationId, proto2.Action_REMOVE)
+	if nuErr != nil {
 		res.Status = status.InternalServerError("failed to notify the user")
-		return err
+		return nuErr
 	}
-	if err := notifyGroup(ctx, req.UserId, req.ConversationId, proto2.Action_REMOVE); err != nil {
+	if ngErr != nil {
 		res.Status = status.InternalServerError("failed to notify group")
-		return err
+		return ngErr
 	}
 	res.Status = status.SuccessValue
 	// notify the user

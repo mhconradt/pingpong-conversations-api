@@ -1,23 +1,36 @@
 package pubsub
 
 import (
-	"github.com/apache/pulsar/pulsar-client-go/pulsar"
-	"os"
-	"runtime"
+	"fmt"
+	"github.com/go-redis/redis"
+	"time"
 )
 
-func GetPulsarEndpoint() string {
-	if e, found := os.LookupEnv("PULSAR_URL"); found {
-		return e
-	}
-	return "pulsar://localhost:6650"
+var client *redis.ClusterClient
+
+func NewClient() *redis.ClusterClient {
+	opts := GetRedisOpts()
+	return redis.NewClusterClient(opts)
 }
 
-func NewClient() (pulsar.Client, error) {
-	e := GetPulsarEndpoint()
-	return pulsar.NewClient(pulsar.ClientOptions{
-		URL: e,
-		OperationTimeoutSeconds: 5,
-		MessageListenerThreads: runtime.NumCPU(),
-	})
+func GetRedisOpts() *redis.ClusterOptions {
+	return &redis.ClusterOptions{
+		Addrs:       ClusterAddresses(6),
+		PoolSize:    100,
+		MaxConnAge:  15 * time.Second,
+		IdleTimeout: 5 * time.Second,
+	}
+}
+
+func ClusterAddresses(count int) []string {
+	addresses := make([]string, count, count)
+	for i := 0; i < count; i++ {
+		f := "redis-cluster-%v.redis-cluster.default.svc.cluster.local:6379"
+		addresses[i] = fmt.Sprintf(f, i)
+	}
+	return addresses
+}
+
+func init() {
+	client = NewClient()
 }

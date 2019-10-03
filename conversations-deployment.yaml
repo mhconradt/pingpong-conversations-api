@@ -1,0 +1,69 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: conversations
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pingpong-conversations-api
+    spec:
+      containers:
+        - name: conversations
+          command: [
+            "/pingpong-conversations-api",
+            "--selector=static",
+            "--server_address=0.0.0.0:8080",
+            "--broker_address=0.0.0.0:10001"
+          ]
+          image: gcr.io/personal-251201/pingpong-conversations-api:latest
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: :8080
+            - name: DATABASE_HOST
+              value: 127.0.0.1
+                  # These secrets are required to start the pod.
+                  # [START cloudsql_secrets]
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-instance-credentials
+                  key: username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-instance-credentials
+                  key: password
+          ports:
+            - containerPort: 8080
+              name: conv-port
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.14
+          command: ["/cloud_sql_proxy",
+                    "-instances=personal-251201:us-central1:pingpong=tcp:5432",
+            # If running on a VPC, the Cloud SQL proxy can connect via Private IP. See:
+            # https://cloud.google.com/sql/docs/mysql/private-ip for more info.
+            # "-ip_address_types=PRIVATE",
+                    "-credential_file=/proxy_secrets/cloudsql/credentials.json"]
+          # [START cloudsql_security_context]
+          securityContext:
+            runAsUser: 2  # non-root user
+            allowPrivilegeEscalation: false
+          # [END cloudsql_security_context]
+          volumeMounts:
+              readOnly: true
+            - name: credentials
+              mountPath: /proxy_secrets/cloudsql
+
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+        - name: credentials
+          configMap:
+            name: credentials
+            defaultMode: 0755
+

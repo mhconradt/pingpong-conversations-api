@@ -19,34 +19,20 @@ func (c *Conversations) ListMessages(ctx context.Context, req *proto2.ListMessag
 		}
 		return s.Send(res)
 	}
-	if err := publishMessages(messages, s); err != nil {
+	if err := publishExistingMessages(messages, s); err != nil {
 		res := &proto2.ListMessagesResponse{
 			Status: status.InternalServerError("failed to publish message!"),
 		}
 		return s.Send(res)
 	}
 	topicName := fmt.Sprintf("conversations_%v_messages", req.ConversationId)
-	sub, err := pubsub.NewSubscriber(topicName, fmt.Sprintf("%v", req.SubscriberId))
-	if err != nil {
+	sub := pubsub.NewSubscriber(topicName)
+	defer sub.Close()
+	if err := publishNewMessages(sub.Messages, s); err != nil {
 		res := &proto2.ListMessagesResponse{
-			Status: status.InternalServerError("failed to subscribe to new messages for conversation: ", req.ConversationId),
+			Status: status.InternalServerError("failed to publish new messages"),
 		}
 		return s.Send(res)
-	}
-	defer sub.Close()
-	for msg := range sub.Messages {
-		m := new(message.Message)
-		if err := proto.Unmarshal(msg, m); err != nil {
-			res := &proto2.ListMessagesResponse{
-				Status: status.InternalServerError("failed to decode message"),
-			}
-			return s.Send(res)
-		}
-		res := &proto2.ListMessagesResponse{
-			Message: m,
-			Status:  status.SuccessValue,
-		}
-		_ = s.Send(res)
 	}
 	return nil
 }
@@ -78,13 +64,30 @@ func decodeMessageRows(ctx context.Context, rows *sql.Rows) ([]*message.Message,
 	return messages, nil
 }
 
-func publishMessages(messages []*message.Message, s proto2.Conversations_ListMessagesStream) error {
+func publishExistingMessages(messages []*message.Message, s proto2.Conversations_ListMessagesStream) error {
 	for _, msg := range messages {
 		res := &proto2.ListMessagesResponse{
 			Message: msg,
 			Status:  status.SuccessValue,
 		}
 		// send latency may be non-negligible
+		if err := s.Send(res); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func publishNewMessages(messages <- chan []byte, s proto2.Conversations_ListMessagesStream) error {
+	for msg := range messages {
+		m := new(message.Message)
+		if err := proto.Unmarshal(msg, m); err != nil {
+			return err
+		}
+		res := &proto2.ListMessagesResponse{
+			Message: m,
+			Status:  status.SuccessValue,
+		}
 		if err := s.Send(res); err != nil {
 			return err
 		}
@@ -106,7 +109,7 @@ func (c *Conversations) SendMessage(ctx context.Context, req *proto2.SendMessage
 		return err
 	}
 	topicName := fmt.Sprintf("conversations_%v_messages", m.ConversationId)
-	if err := pubsub.SendOnce(topicName, msg); err != nil {
+	if err := pubsub.Publish(topicName, msg); err != nil {
 		res.Status = status.InternalServerError("failed to publish message")
 		return err
 	}

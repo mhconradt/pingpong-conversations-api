@@ -51,13 +51,7 @@ func (c *Conversations) ListConversations(ctx context.Context, req *proto2.ListC
 		return s.Send(res)
 	}
 	topic := fmt.Sprintf("users_%v_conversations", req.SubscriberId)
-	sub, err := pubsub.NewSubscriber(topic, "self")
-	if err != nil {
-		res := proto2.ListConversationsResponse{
-			Status: status.InternalServerError("error subscribing to new conversations"),
-		}
-		return s.Send(&res)
-	}
+	sub := pubsub.NewSubscriber(topic)
 	defer sub.Close()
 	for msg := range sub.Messages {
 		lcr := new(proto2.ListConversationsResponse)

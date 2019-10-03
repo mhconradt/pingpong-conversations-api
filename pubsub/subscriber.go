@@ -1,8 +1,7 @@
 package pubsub
 
 import (
-	"fmt"
-	"github.com/apache/pulsar/pulsar-client-go/pulsar"
+	"github.com/go-redis/redis"
 )
 
 // Maybe accepting a
@@ -15,47 +14,25 @@ import (
 type Subscriber struct {
 	TopicName, SubscriberName string
 	Messages                  chan []byte
-	consumer                  pulsar.Consumer
+	ps *redis.PubSub
 }
 
 func (s *Subscriber) Close() {
-	fmt.Println("closing")
-	if err := s.consumer.Close(); err != nil {
-		fmt.Println("error closing consumer:", err)
-	}
+	_ = s.ps.Close()
 	close(s.Messages)
 }
 
-func NewSubscriber(tn, sn string) (*Subscriber, error) {
-	client, err := NewClient()
-	if err != nil {
-		return new(Subscriber), err
-	}
-	mc := make(chan pulsar.ConsumerMessage)
-	consumerOpts := pulsar.ConsumerOptions{
-		Topic:            tn,
-		SubscriptionName: sn,
-		Type:             pulsar.Exclusive,
-		MessageChannel:   mc,
-	}
-	c, err := client.Subscribe(consumerOpts)
-	if err != nil {
-		return new(Subscriber), err
-	}
+func NewSubscriber(tn string) *Subscriber {
+	ps := client.Subscribe(tn)
 	dataChan := make(chan []byte)
 	go func() {
-		for msg := range mc {
-			dataChan <- msg.Payload()
-			if err := c.Ack(msg.Message); err != nil {
-				fmt.Println("error acknowledging message: ", err)
-			}
+		for msg := range ps.Channel() {
+			dataChan <- []byte(msg.Payload)
 		}
 	}()
 	return &Subscriber{
 		TopicName:      tn,
-		SubscriberName: sn,
 		Messages:       dataChan,
-		consumer: c,
-	}, nil
+	}
 	// Create a channel that
 }

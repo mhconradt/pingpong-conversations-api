@@ -10,26 +10,15 @@ require (
 	google.golang.org/genproto v0.0.0-20190916214212-f660b8655731
 )
 
-require github.com/mhconradt/grpc-statuses v0.0.0
-
-replace github.com/mhconradt/grpc-statuses => ../grpc-statuses
-
-require github.com/mhconradt/proto/status v0.0.0
-
-replace github.com/mhconradt/proto/status => ../proto/status
-
-require github.com/mhconradt/proto/conversation v0.0.0
-
-require github.com/mhconradt/proto/message v0.0.0
-
-replace github.com/mhconradt/proto/message => ../proto/message
-
-replace github.com/mhconradt/proto/conversation => ../proto/conversation
-
-require google.golang.org/grpc v1.22.1
-
-require github.com/mhconradt/proto/user v0.0.0
-
-replace github.com/mhconradt/proto/user => ../proto/user
+require (
+	github.com/Comcast/pulsar-client-go v0.1.1
+	github.com/go-redis/redis v6.15.5+incompatible
+	github.com/mhconradt/grpc-statuses v0.0.0-20191002035313-43b1e0740c80
+	github.com/mhconradt/proto/conversation v0.0.0-20191002034903-e7427ae51808
+	github.com/mhconradt/proto/message v0.0.0-20191002034903-e7427ae51808
+	github.com/mhconradt/proto/status v0.0.0-20191002034903-e7427ae51808
+	github.com/mhconradt/proto/user v0.0.0-20191002034903-e7427ae51808
+	google.golang.org/grpc v1.22.1
+)
 
 go 1.13
