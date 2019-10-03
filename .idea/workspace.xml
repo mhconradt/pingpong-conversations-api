@@ -2,21 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8156b535-3e0c-4ed4-9f6c-8160e571cddc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/conversations-deployment.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/conversations-svc.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db_proxy.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/conversation/conversation.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/conversation/conversation.pb.gorm.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/conversation/conversation.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/conversation/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/message/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/message/message.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/message/message.pb.gorm.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/message/message.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/status/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/status/status.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/status/status.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/user/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/user/user.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/user/user.pb.gorm.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/user/user.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/status/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pingpong-conversations-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pingpong-conversations-api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/conversations-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/conversations-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conversations-svc.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/conversations-svc.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conversations.go" beforeDir="false" afterPath="$PROJECT_DIR$/conversations.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/members.go" beforeDir="false" afterPath="$PROJECT_DIR$/members.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/messages.go" beforeDir="false" afterPath="$PROJECT_DIR$/messages.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pingpong-conversations-api" beforeDir="false" afterPath="$PROJECT_DIR$/pingpong-conversations-api" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubsub/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pubsub/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubsub/publisher.go" beforeDir="false" afterPath="$PROJECT_DIR$/pubsub/publisher.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubsub/subscriber.go" beforeDir="false" afterPath="$PROJECT_DIR$/pubsub/subscriber.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/conversations.micro.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto/conversations.micro.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/conversations.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto/conversations.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/conversations.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/conversations.proto" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,85 +62,63 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pubsub/client.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="36" selection-end-line="36" />
-              <folding>
-                <element signature="e#16#95#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#14#63#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pubsub/publisher.go">
+        <entry file="file://$PROJECT_DIR$/proto/conversations.proto">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
-              <caret line="13" column="13" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="13" />
-              <folding>
-                <element signature="e#16#83#0" expanded="true" />
-              </folding>
+              <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/conversations.go">
+        <entry file="file://$PROJECT_DIR$/proto/user/user.proto">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="590">
-              <caret line="53" column="38" selection-start-line="53" selection-start-column="38" selection-end-line="53" selection-end-column="38" />
+            <state relative-caret-position="315">
+              <caret line="21" column="62" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/members.go">
+        <entry file="file://$PROJECT_DIR$/status/errors.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="60">
+              <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/proto/status/status.proto">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/proto/status/status.pb.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="34" column="35" lean-forward="true" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="443">
+              <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
               <folding>
-                <element signature="e#14#352#0" expanded="true" />
+                <element signature="e#14#268#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/conversations-deployment.yaml">
+        <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/conversations-svc.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="75">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -132,17 +126,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/go.sum">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
+            <state relative-caret-position="148">
               <caret line="209" column="89" selection-start-line="209" selection-start-column="89" selection-end-line="209" selection-end-column="89" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/messages.go">
+        <entry file="file://$PROJECT_DIR$/users.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="60" selection-start-line="9" selection-start-column="60" selection-end-line="9" selection-end-column="60" />
+            <state relative-caret-position="285">
+              <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+              <folding>
+                <element signature="e#14#185#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/go.mod">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -158,12 +164,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Delete</find>
-      <find>DefaultDeleteConversation</find>
-      <find>ToORM</find>
-      <find>Conversations_ListConversationsStream</find>
-      <find>scan</find>
-      <find>s.Send(res)</find>
       <find>Conversations_ListMessagesStream</find>
       <find>ListMessagesRequest</find>
       <find>type ConversationsHandler i</find>
@@ -188,6 +188,12 @@
       <find>redis-cluster</find>
       <find>NewProducer</find>
       <find>quic-</find>
+      <find>pingpon</find>
+      <find>port</find>
+      <find>Users</find>
+      <find>func (u</find>
+      <find>quic</find>
+      <find>usr</find>
     </findStrings>
     <replaceStrings>
       <replace>e</replace>
@@ -201,6 +207,9 @@
       <replace>pingpong</replace>
       <replace>5432</replace>
       <replace>pingpong-conversations-api</replace>
+      <replace>Conversations</replace>
+      <replace>func (c</replace>
+      <replace>u</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/proto</dir>
@@ -216,7 +225,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/users.go" />
         <option value="$PROJECT_DIR$/pubsub_test.go" />
         <option value="$PROJECT_DIR$/proto/conversations.micro.go" />
         <option value="$PROJECT_DIR$/../proto/user/user.proto" />
@@ -225,9 +233,7 @@
         <option value="$PROJECT_DIR$/../proto/conversation/conversation.proto" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/bbb146c7-86a1-48f6-83fd-c612a65b4865/console.sql" />
         <option value="$PROJECT_DIR$/db.go" />
-        <option value="$PROJECT_DIR$/proto/conversations.proto" />
         <option value="$PROJECT_DIR$/util.go" />
-        <option value="$PROJECT_DIR$/conversations-svc.yaml" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$USER_HOME$/k8s-config/pulsar/bookie.yaml" />
         <option value="$USER_HOME$/k8s-config/pulsar/zookeeper.yaml" />
@@ -245,8 +251,14 @@
         <option value="$PROJECT_DIR$/members.go" />
         <option value="$PROJECT_DIR$/messages.go" />
         <option value="$PROJECT_DIR$/Dockerfile" />
-        <option value="$PROJECT_DIR$/go.sum" />
         <option value="$PROJECT_DIR$/conversations-deployment.yaml" />
+        <option value="$PROJECT_DIR$/conversations-svc.yaml" />
+        <option value="$USER_HOME$/k8s-config/pingpong-ingress.yaml" />
+        <option value="$PROJECT_DIR$/go.sum" />
+        <option value="$PROJECT_DIR$/users.go" />
+        <option value="$PROJECT_DIR$/proto/user/user.proto" />
+        <option value="$PROJECT_DIR$/proto/conversations.proto" />
+        <option value="$PROJECT_DIR$/Makefile" />
       </list>
     </option>
   </component>
@@ -260,6 +272,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -272,11 +285,38 @@
               <item name="pingpong-conversations-api" type="47feb1d3:ProjectViewModuleNode" />
               <item name="pingpong-conversations-api" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="pingpong-conversations-api" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pingpong-conversations-api" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="pingpong-conversations-api" type="462c0819:PsiDirectoryNode" />
+              <item name="proto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pingpong-conversations-api" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pingpong-conversations-api" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="pingpong-conversations-api" type="462c0819:PsiDirectoryNode" />
+              <item name="status" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pingpong-conversations-api" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pingpong-conversations-api" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="grpc-statuses" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pingpong-conversations-api" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pingpong-conversations-api" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="proto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pingpong-conversations-api" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pingpong-conversations-api" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="proto" type="462c0819:PsiDirectoryNode" />
+              <item name="status" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -304,6 +344,10 @@
     <key name="OPEN_URL_DIALOG">
       <recent name="https://raw.githubusercontent.com/jinzhu/gorm/master/scope.go" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/status" />
+      <recent name="$PROJECT_DIR$/proto" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -324,7 +368,7 @@
     <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49387756" visible="true" weight="0.15323566" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49387756" visible="true" weight="0.15506716" />
       <window_info id="Structure" order="1" sideWeight="0.506079" side_tool="true" weight="0.15140416" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -339,7 +383,7 @@
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info active="true" anchor="bottom" id="Database Console" order="11" visible="true" weight="0.32941177" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.50612247" visible="true" weight="0.4673797" />
+      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.50612247" visible="true" weight="0.4673797" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -354,14 +398,6 @@
     <proxy>direct</proxy>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/proto/conversations.pb.gorm.go" />
-    <entry file="file://$PROJECT_DIR$/../proto/conversation/conversation.pb.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-236">
-          <caret line="59" column="10" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../proto/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -434,27 +470,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proto/conversations.pb.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2020">
-          <caret line="236" column="20" selection-start-line="236" selection-start-column="9" selection-end-line="236" selection-end-column="20" />
-          <folding>
-            <element signature="e#104#480#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../proto/conversation/conversation.proto">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/proto/conversations.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="30" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -466,9 +485,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/util.go" />
-    <entry file="file://$PROJECT_DIR$/mysql_wordpress_deployment.yaml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_wordpress_deployment.yaml" />
     <entry file="file://$USER_HOME$/k8s-config/pulsar/bookie.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="421">
@@ -521,16 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-          <folding>
-            <element signature="e#14#268#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../../pkg/mod/github.com/apache/pulsar/pulsar-client-go@v0.0.0-20190924204837-ee42cf403349/pulsar/c_go_pulsar.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-521">
@@ -538,26 +545,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/go.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/random/random_string.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-          <folding>
-            <element signature="e#16#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/random/random_string.go" />
     <entry file="file://$PROJECT_DIR$/../hftizzle/load_historical.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -602,13 +590,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/shrpa-ingress.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="27" selection-start-line="9" selection-start-column="2" selection-end-line="24" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/members.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
+        <state relative-caret-position="45">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
           <folding>
             <element signature="e#14#352#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../personal-website/website.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -621,7 +626,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/db.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
+        <state relative-caret-position="-44">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#14#63#0" expanded="true" />
@@ -629,31 +634,126 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conversations-svc.yaml">
+    <entry file="file://$PROJECT_DIR$/../grpc-statuses/errors.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+          <caret line="9" column="16" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="16" />
+          <folding>
+            <element signature="e#145#205#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
+    <entry file="file://$PROJECT_DIR$/../proto/status/status.pb.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/go.sum">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="209" column="89" selection-start-line="209" selection-start-column="89" selection-end-line="209" selection-end-column="89" />
+        <state relative-caret-position="328">
+          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+          <folding>
+            <element signature="e#90#211#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/conversations-deployment.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
+        <state relative-caret-position="364">
+          <caret line="77" column="28" selection-start-line="61" selection-start-column="8" selection-end-line="77" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conversations-svc.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/k8s-config/pingpong-ingress.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="25" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/conversations.pb.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="1269" column="36" selection-start-line="1269" selection-start-column="36" selection-end-line="1269" selection-end-column="36" />
+          <folding>
+            <element signature="e#104#480#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/go.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/go.sum">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="209" column="89" selection-start-line="209" selection-start-column="89" selection-end-line="209" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+          <folding>
+            <element signature="e#14#185#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/user/user.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="62" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/status/errors.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/conversations.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/status/status.proto">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/status/status.pb.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="34" column="35" lean-forward="true" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+          <folding>
+            <element signature="e#14#268#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>

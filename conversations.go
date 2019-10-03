@@ -98,8 +98,8 @@ func publishConversations(conversations []*conversation.Conversation, s proto2.C
 	for _, c := range conversations {
 		res := &proto2.ListConversationsResponse{
 			Conversation: c,
-			Status: status.SuccessValue,
-			Action: proto2.Action_LIST,
+			Status:       status.SuccessValue,
+			Action:       proto2.Action_LIST,
 		}
 		if err := s.Send(res); err != nil {
 			return err

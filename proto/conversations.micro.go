@@ -7,10 +7,10 @@ import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	_ "github.com/infobloxopen/protoc-gen-gorm/options"
-	_ "github.com/mhconradt/proto/conversation"
-	_ "github.com/mhconradt/proto/message"
-	_ "github.com/mhconradt/proto/status"
-	_ "github.com/mhconradt/proto/user"
+	_ "github.com/mhconradt/pingpong-conversations-api/proto/conversation"
+	_ "github.com/mhconradt/pingpong-conversations-api/proto/message"
+	_ "github.com/mhconradt/pingpong-conversations-api/proto/status"
+	_ "github.com/mhconradt/pingpong-conversations-api/proto/user"
 	_ "google.golang.org/genproto/protobuf/field_mask"
 	math "math"
 )
@@ -63,6 +63,10 @@ type ConversationsService interface {
 	ListMembers(ctx context.Context, in *ListMembersRequest, opts ...client.CallOption) (Conversations_ListMembersService, error)
 	// Removes a user from the conversation
 	RemoveMember(ctx context.Context, in *RemoveMemberRequest, opts ...client.CallOption) (*RemoveMemberResponse, error)
+	GetUser(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*GetUserResponse, error)
+	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...client.CallOption) (*CreateUserResponse, error)
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...client.CallOption) (*UpdateUserResponse, error)
+	DeactivateUser(ctx context.Context, in *DeactivateUserRequest, opts ...client.CallOption) (*DeactivateUserResponse, error)
 }
 
 type conversationsService struct {
@@ -275,6 +279,46 @@ func (c *conversationsService) RemoveMember(ctx context.Context, in *RemoveMembe
 	return out, nil
 }
 
+func (c *conversationsService) GetUser(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*GetUserResponse, error) {
+	req := c.c.NewRequest(c.name, "Conversations.GetUser", in)
+	out := new(GetUserResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *conversationsService) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...client.CallOption) (*CreateUserResponse, error) {
+	req := c.c.NewRequest(c.name, "Conversations.CreateUser", in)
+	out := new(CreateUserResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *conversationsService) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...client.CallOption) (*UpdateUserResponse, error) {
+	req := c.c.NewRequest(c.name, "Conversations.UpdateUser", in)
+	out := new(UpdateUserResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *conversationsService) DeactivateUser(ctx context.Context, in *DeactivateUserRequest, opts ...client.CallOption) (*DeactivateUserResponse, error) {
+	req := c.c.NewRequest(c.name, "Conversations.DeactivateUser", in)
+	out := new(DeactivateUserResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Conversations service
 
 type ConversationsHandler interface {
@@ -301,6 +345,10 @@ type ConversationsHandler interface {
 	ListMembers(context.Context, *ListMembersRequest, Conversations_ListMembersStream) error
 	// Removes a user from the conversation
 	RemoveMember(context.Context, *RemoveMemberRequest, *RemoveMemberResponse) error
+	GetUser(context.Context, *GetUserRequest, *GetUserResponse) error
+	CreateUser(context.Context, *CreateUserRequest, *CreateUserResponse) error
+	UpdateUser(context.Context, *UpdateUserRequest, *UpdateUserResponse) error
+	DeactivateUser(context.Context, *DeactivateUserRequest, *DeactivateUserResponse) error
 }
 
 func RegisterConversationsHandler(s server.Server, hdlr ConversationsHandler, opts ...server.HandlerOption) error {
@@ -314,6 +362,10 @@ func RegisterConversationsHandler(s server.Server, hdlr ConversationsHandler, op
 		AddMember(ctx context.Context, in *AddMemberRequest, out *AddMemberResponse) error
 		ListMembers(ctx context.Context, stream server.Stream) error
 		RemoveMember(ctx context.Context, in *RemoveMemberRequest, out *RemoveMemberResponse) error
+		GetUser(ctx context.Context, in *GetUserRequest, out *GetUserResponse) error
+		CreateUser(ctx context.Context, in *CreateUserRequest, out *CreateUserResponse) error
+		UpdateUser(ctx context.Context, in *UpdateUserRequest, out *UpdateUserResponse) error
+		DeactivateUser(ctx context.Context, in *DeactivateUserRequest, out *DeactivateUserResponse) error
 	}
 	type Conversations struct {
 		conversations
@@ -453,4 +505,20 @@ func (x *conversationsListMembersStream) Send(m *ListMembersResponse) error {
 
 func (h *conversationsHandler) RemoveMember(ctx context.Context, in *RemoveMemberRequest, out *RemoveMemberResponse) error {
 	return h.ConversationsHandler.RemoveMember(ctx, in, out)
+}
+
+func (h *conversationsHandler) GetUser(ctx context.Context, in *GetUserRequest, out *GetUserResponse) error {
+	return h.ConversationsHandler.GetUser(ctx, in, out)
+}
+
+func (h *conversationsHandler) CreateUser(ctx context.Context, in *CreateUserRequest, out *CreateUserResponse) error {
+	return h.ConversationsHandler.CreateUser(ctx, in, out)
+}
+
+func (h *conversationsHandler) UpdateUser(ctx context.Context, in *UpdateUserRequest, out *UpdateUserResponse) error {
+	return h.ConversationsHandler.UpdateUser(ctx, in, out)
+}
+
+func (h *conversationsHandler) DeactivateUser(ctx context.Context, in *DeactivateUserRequest, out *DeactivateUserResponse) error {
+	return h.ConversationsHandler.DeactivateUser(ctx, in, out)
 }

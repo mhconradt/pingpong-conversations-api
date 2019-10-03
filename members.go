@@ -55,13 +55,13 @@ func (c *Conversations) AddMember(ctx context.Context, req *proto2.AddMemberRequ
 }
 
 func saveUserStatus(ctx context.Context, uId, cId int32, status int) error {
-	q := fmt.Sprintf("insert into user_conversations (conversation_id, user_id, status) VALUES (%v, %v, %v) " +
+	q := fmt.Sprintf("insert into user_conversations (conversation_id, user_id, status) VALUES (%v, %v, %v) "+
 		"ON CONFLICT ON CONSTRAINT user_conversations_pkey DO UPDATE SET status = %v;", cId, uId, status, status)
 	stmt, err := pool.DB().PrepareContext(ctx, q)
 	if err != nil {
 		return err
 	}
-	defer func () { _ = stmt.Close() }()
+	defer func() { _ = stmt.Close() }()
 	_, err = stmt.ExecContext(ctx)
 	return err
 }
@@ -73,14 +73,14 @@ func notifyUser(ctx context.Context, userId, conversationId int32, action proto2
 	}
 	msg, err := proto.Marshal(&proto2.ListConversationsResponse{
 		Conversation: c,
-		Action: action,
-		Status: status.SuccessValue,
+		Action:       action,
+		Status:       status.SuccessValue,
 	})
 	if err != nil {
 		return err
 	}
 	topic := fmt.Sprintf("users_%v_conversations", userId)
-	return pubsub.Publish(topic,  msg)
+	return pubsub.Publish(topic, msg)
 }
 
 func notifyGroup(ctx context.Context, userId, conversationId int32, action proto2.Action) error {
@@ -91,7 +91,7 @@ func notifyGroup(ctx context.Context, userId, conversationId int32, action proto
 	}
 	topic := fmt.Sprintf("conversations_%v_members", conversationId)
 	lmr := &proto2.ListMembersResponse{
-		User: u,
+		User:   u,
 		Action: action,
 		Status: status.SuccessValue,
 	}
@@ -135,8 +135,8 @@ func (c *Conversations) ListMembers(ctx context.Context, req *proto2.ListMembers
 }
 
 func fetchExistingMembers(ctx context.Context, conversationId int32) (members []*user.User, err error) {
-	qs := fmt.Sprintf("with conversation_users as (" +
-		"select * from conversations c inner join user_conversations uc on c.id = uc.conversation_id where c.id = %v) " +
+	qs := fmt.Sprintf("with conversation_users as ("+
+		"select * from conversations c inner join user_conversations uc on c.id = uc.conversation_id where c.id = %v) "+
 		"select u.* from conversation_users inner join users u on u.id = conversation_users.user_id where conversation_users.status = 1;", conversationId)
 	rows, err := pool.DB().QueryContext(ctx, qs)
 	if err != nil {
@@ -161,7 +161,7 @@ func decodeMemberRows(ctx context.Context, rows *sql.Rows) ([]*user.User, error)
 func publishMembers(members []*user.User, s proto2.Conversations_ListMembersStream) error {
 	for _, member := range members {
 		res := &proto2.ListMembersResponse{
-			User: member,
+			User:   member,
 			Status: status.SuccessValue,
 			Action: proto2.Action_LIST,
 		}

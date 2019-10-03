@@ -5,8 +5,15 @@ metadata:
   labels:
     app: conversations
 spec:
+  type: NodePort
   ports:
     - port: 8080
+      name: traffic
+      targetPort: 8080
+      protocol: TCP
+    - port: 8081
+      name: health
+      targetPort: 8081
       protocol: TCP
   selector:
-    app: conversations
+    app: pingpong-conversations-api

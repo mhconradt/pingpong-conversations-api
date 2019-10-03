@@ -13,12 +13,12 @@ spec:
       containers:
         - name: conversations
           command: [
-            "/pingpong-conversations-api",
+            "pingpong-conversations-api",
             "--selector=static",
             "--server_address=0.0.0.0:8080",
             "--broker_address=0.0.0.0:10001"
           ]
-          image: gcr.io/personal-251201/pingpong-conversations-api:latest
+          image: gcr.io/personal-251201/pingpong-conversations-api:v0.0.1
           imagePullPolicy: Always
           env:
             - name: PORT
@@ -54,9 +54,28 @@ spec:
             allowPrivilegeEscalation: false
           # [END cloudsql_security_context]
           volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
               readOnly: true
             - name: credentials
               mountPath: /proxy_secrets/cloudsql
+        - name: health
+          command: [
+            "/health",
+            "--health_address=0.0.0.0:8081",
+            "--server_name=greeter",
+            "--server_address=0.0.0.0:8080"
+          ]
+          image: microhq/health:kubernetes
+          ports:
+            - containerPort: 8081
+              name: health
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 3
+            periodSeconds: 3
 
       volumes:
         - name: cloudsql-instance-credentials
@@ -64,6 +83,6 @@ spec:
             secretName: cloudsql-instance-credentials
         - name: credentials
           configMap:
-            name: credentials
+            name: cloudsql-proxy-credentials
             defaultMode: 0755
 

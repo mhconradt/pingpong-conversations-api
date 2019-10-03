@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "github.com/infobloxopen/protoc-gen-gorm/options/gorm.proto";
+package pingpong.message;
+
+message Message {
+    option (gorm.opts).ormable = true;
+    // The id of the parent conversation
+    int32 id = 1;
+    // An identifier for the message unique within the collection thereof
+    int32 conversation_id = 2;
+    // The text content of a message. I would call this the message itself, but that would be message Inception.
+    string text = 3;
+    // An image url specified in the message.
+    string image_url = 4;
+    enum MessageType {
+        TEXT = 0;
+        IMAGE = 1;
+        MULTIMEDIA = 2;
+    }
+    // The type of the message (specified by the client)
+    MessageType type = 5;
+    // The id of the user who sent the message
+    int32 sender_id = 6;
+    // The time at which the message was sent
+    google.protobuf.Timestamp sent_at = 7;
+}
+

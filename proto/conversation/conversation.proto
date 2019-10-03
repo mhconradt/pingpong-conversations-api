@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "github.com/infobloxopen/protoc-gen-gorm/options/gorm.proto";
+package pingpong.conversation;
+
+// Relationships:
+// Messages in a conversation: conversation has many messages
+// A user's conversations: user many2many conversation
+
+message Conversation {
+    option (gorm.opts).ormable = true;
+    // An identifier for the conversation that is unique within the collection thereof
+    int32 id = 1;
+    // The conversation's user-selected display name
+    string display_name = 2;
+    // The url to the conversation's user-selected avatar
+    string image_url = 3;
+    // The time at which the conversation was created
+    google.protobuf.Timestamp created_time = 4;
+    // The time at which the conversation was last updated
+    google.protobuf.Timestamp updated_time = 5;
+}
+
+enum Action {
+    LIST = 0;
+    REMOVE = 1;
+    NEW = 2;
+}

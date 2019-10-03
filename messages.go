@@ -78,7 +78,7 @@ func publishExistingMessages(messages []*message.Message, s proto2.Conversations
 	return nil
 }
 
-func publishNewMessages(messages <- chan []byte, s proto2.Conversations_ListMessagesStream) error {
+func publishNewMessages(messages <-chan []byte, s proto2.Conversations_ListMessagesStream) error {
 	for msg := range messages {
 		m := new(message.Message)
 		if err := proto.Unmarshal(msg, m); err != nil {
